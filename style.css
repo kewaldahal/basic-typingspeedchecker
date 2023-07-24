@@ -49,7 +49,67 @@ button {
     font-size: 18px;
 }
 
-button:hover{
+button:hover {
     background-color: #23d137;
-    color: #ffffff;
+    color: #942b2b;
+}
+
+.cpr {
+    margin-top: 300px;
+}
+
+@keyframes blink {
+    0% {
+        background-color: red;
+    }
+
+    10% {
+        background-color: rgb(116, 228, 10);
+    }
+
+    20% {
+        background-color: rgb(12, 203, 241);
+    }
+
+    30% {
+        background-color: rgb(226, 5, 196);
+    }
+
+    40% {
+        background-color: rgb(212, 233, 24);
+    }
+
+    50% {
+        background-color: transparent;
+    }
+
+    60% {
+        background-color: rgb(116, 228, 10);
+    }
+
+    70% {
+        background-color: rgb(12, 203, 241);
+    }
+
+    80% {
+        background-color: rgb(226, 5, 196);
+    }
+
+    90% {
+        background-color: rgb(212, 233, 24);
+    }
+
+    95% {
+        background-color: aquamarine;
+    }
+
+    100% {
+        background-color: red;
+    }
+}
+
+.cpr:hover {
+    animation: blink 0.90s infinite;
+    margin-left: 350px;
+    margin-right: 350px;
 }
