@@ -6,11 +6,17 @@
 </head>
 <body>
     <div class="container">
-        <div class="text-to-type">The quick brown fox jumps over the lazy dog.</div>
+        <div class="text-to-type" id="text-to-type">Press "Start Typing" to begin.</div>
         <textarea id="user-input" placeholder="Start typing here..."></textarea>
         <button onclick="startTyping()">Start Typing</button>
+        <button onclick="resetPage()">Reset</button>
         <div class="timer" id="timer">20</div>
-        <div class="result" id="result">Your typing speed: <span id="speed">0</span> CPM</div>
+        <div class="result" id="result">Your typing speed: <span id="speed">0</span> CPM (0 WPM)</div>
+    </div>
+    <div class="cpr">
+        <footer>
+          &copy; <a href="https://kewaldahal.com.np/" target="_blank">Kewal Dahal</a>
+        </footer>
     </div>
     <script src="script.js"></script>
 </body>
