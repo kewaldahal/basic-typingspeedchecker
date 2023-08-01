@@ -28,7 +28,7 @@ function startTyping() {
         document.getElementById('user-input').value = '';
         let randomSentence = getRandomSentence();
         document.getElementById('text-to-type').textContent = randomSentence;
-        document.getElementById('result').textContent = `Your typing speed: 0 CPM (0 WPM)`;
+        document.getElementById('result').textContent = `Your typing speed: 0 CPM (0 WPM) | Accuracy: 100%`;
         startTime = Date.now();
         timer = setInterval(updateTimer, 1000);
     }
@@ -45,34 +45,89 @@ function updateTimer() {
     }
 }
 
-
-
 function finishTyping() {
     clearInterval(timer);
     isTyping = false;
     let userText = document.getElementById('user-input').value;
     let userCPM = calculateCPM(userText);
     let userWPM = calculateWPM(userText);
+    let accuracy = calculateAccuracy(userText);
 
-    document.getElementById('result').textContent = `Your typing speed: ${userCPM} CPM (${userWPM} WPM)`;
+    document.getElementById('result').textContent = `Your typing speed: ${userCPM} CPM (${userWPM} WPM) | Accuracy: ${accuracy}%`;
+
+  
+    let emojiIcon = document.getElementById('emojiIcon');
+    if (userWPM >= 40) {
+        emojiIcon.textContent = '😃'; 
+    } else if (userWPM >= 20) {
+        emojiIcon.textContent = '😐'; 
+    } else {
+        emojiIcon.textContent = '🙁'; 
+    }
+
+    highlightIncorrectWords(userText);
 }
 
 function calculateCPM(userText) {
-    let userCharacters = userText.replace(/\s/g, ''); // Remove white spaces
-    let textCharacters = document.getElementById('text-to-type').textContent.replace(/\s/g, ''); // Remove white spaces
+    let userCharacters = userText.replace(/\s/g, ''); 
+    let textCharacters = document.getElementById('text-to-type').textContent.replace(/\s/g, '');
 
-    let timeElapsed = Math.min((Date.now() - startTime) / 1000 / 60, 20); // in minutes, maximum 20 minutes
+    let timeElapsed = Math.min((Date.now() - startTime) / 1000 / 60, 20); 
     let cpm = Math.round(userCharacters.length / timeElapsed);
     return cpm;
 }
 
-
-
 function calculateWPM(userText) {
     let userWords = userText.trim().split(/\s+/);
-    let timeElapsed = Math.min((Date.now() - startTime) / 1000 / 60, 20); // in minutes, maximum 20 minutes
+    let timeElapsed = Math.min((Date.now() - startTime) / 1000 / 60, 20); 
     let wpm = Math.round(userWords.length / timeElapsed);
     return wpm;
+}
+
+function calculateAccuracy(userText) {
+    let userWords = userText.trim().split(/\s+/);
+    let textWords = document.getElementById('text-to-type').textContent.trim().split(/\s+/);
+
+    let incorrectWordsCount = 0;
+
+    for (let i = 0; i < Math.min(userWords.length, textWords.length); i++) {
+        if (userWords[i] !== textWords[i]) {
+            incorrectWordsCount++;
+        }
+    }
+
+    for (let i = userWords.length; i < textWords.length; i++) {
+        incorrectWordsCount++;
+    }
+
+    let totalWords = textWords.length;
+    let correctWords = totalWords - incorrectWordsCount;
+    let accuracy = (correctWords / totalWords) * 100;
+    return accuracy.toFixed(2);
+}
+
+function highlightIncorrectWords(userText) {
+    let userWords = userText.trim().split(/\s+/);
+    let textWords = document.getElementById('text-to-type').textContent.trim().split(/\s+/);
+
+    let incorrectWordsCount = 0;
+    let highlightedText = "";
+
+    for (let i = 0; i < Math.min(userWords.length, textWords.length); i++) {
+        if (userWords[i] !== textWords[i]) {
+            highlightedText += `<span class="incorrect-word">${userWords[i]}</span> `;
+            incorrectWordsCount++;
+        } else {
+            highlightedText += userWords[i] + " ";
+        }
+    }
+
+    for (let i = userWords.length; i < textWords.length; i++) {
+        highlightedText += `<span class="missing-word">${textWords[i]}</span> `;
+        incorrectWordsCount++;
+    }
+
+    document.getElementById('text-to-type').innerHTML = highlightedText;
 }
 
 function resetPage() {
@@ -81,12 +136,12 @@ function resetPage() {
     charCount = 0;
     document.getElementById('user-input').value = '';
     document.getElementById('timer').textContent = '20';
-    document.getElementById('result').textContent = `Your typing speed: 0 CPM (0 WPM)`;
+    document.getElementById('result').textContent = `Your typing speed: 0 CPM (0 WPM) | Accuracy: 100%`;
     currentSentenceIndex = (currentSentenceIndex + 1) % sentences.length;
     let randomSentence = sentences[currentSentenceIndex];
     document.getElementById('text-to-type').textContent = randomSentence;
+    document.getElementById('emojiIcon').innerHTML = '';
 }
-
 
 document.getElementById('user-input').addEventListener('keydown', function(event) {
     if (event.key === 'Enter' && isTyping) {
