@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Typing Speed Checker</title>
-    <link rel="stylesheet" type="text/css" href="style_hidden.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-dn6VFVmfG8d3d1zwTMYC2X9b4DEJiymd0BxM4K9B5n0+ulmWeM3kszR40dpyyZsY4l4WfO4+szJZBOuZu5g1g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div class="container">
@@ -11,13 +12,15 @@
         <button onclick="startTyping()">Start Typing</button>
         <button onclick="resetPage()">Reset</button>
         <div class="timer" id="timer">20</div>
-        <div class="result" id="result">Your typing speed: <span id="speed">0</span> CPM (0 WPM)</div>
+        <div class="result" id="result">
+            Your typing speed: <span id="speed">0</span> CPM (<span id="wpm">0</span> WPM)
+            <span class="emoji" id="emojiIcon"></span>
+        </div>
     </div>
-    <div class="cpr">
-        <footer>
-          &copy; <a href="https://kewaldahal.com.np/" target="_blank">Kewal Dahal</a>
-        </footer>
-    </div>
-    <script src="script.js"></script>
+    <footer>
+        <button> &copy; Kewal Dahal | <a href="https://kewaldahal.com.np/" target="_blank">kewal dahal</a></button>
+       
+    </footer>
+    <script src="count.js"></script>
 </body>
 </html>
