@@ -14,7 +14,7 @@ let sentences = [
     "We climbed to the top of the mountain in just under two hours; isn’t that great?"
 ];
 let currentSentenceIndex = 0;
-let isTyping = false;
+let isTyping = false; 
 let charCount = 0;
 
 function getRandomSentence() {
